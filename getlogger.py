@@ -16,7 +16,8 @@ def getlogger():
     hfile = logging.FileHandler("access.log")
     hfile.setLevel(logging.INFO)
 
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
     hterm.setFormatter(formatter)
     hfile.setFormatter(formatter)
@@ -25,13 +26,3 @@ def getlogger():
     logger.addHandler(hfile)
 
     return logger
-
-
-
-
-
-
-
-
-
-

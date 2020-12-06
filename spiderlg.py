@@ -29,8 +29,10 @@ class SpiderLg(object):
         i = 0
         while i < 3:
             try:
-                resp_lg = requests.get(self.base_url, headers=self.headers, timeout=5)
-                logging.debug("Request: %s Status: %s" % (self.base_url, resp_lg.status_code))
+                resp_lg = requests.get(
+                    self.base_url, headers=self.headers, timeout=5)
+                logging.debug("Request: %s Status: %s" %
+                              (self.base_url, resp_lg.status_code))
                 resp_content = resp_lg.content
                 if resp_lg.status_code == 200:
                     work = BeautifulSoup(resp_content, "html.parser")
@@ -55,12 +57,16 @@ class SpiderLg(object):
             for link in position:
                 while i < 3:
                     try:
-                        resp_content = requests.post(link, headers=headers, timeout=5)
-                        logging.debug("Request: %s Status: %s" % (link, resp_content.status_code))
+                        resp_content = requests.post(
+                            link, headers=headers, timeout=5)
+                        logging.debug("Request: %s Status: %s" %
+                                      (link, resp_content.status_code))
                         resp_position = resp_content.content
                         if resp_content.status_code == 200:
-                            content = BeautifulSoup(resp_position, "html.parser")
-                            position_info = content.find_all("li", class_="con_list_item default_list")
+                            content = BeautifulSoup(
+                                resp_position, "html.parser")
+                            position_info = content.find_all(
+                                "li", class_="con_list_item default_list")
                             pattern_exp = re.compile(r"(?<=<!--<i></i>-->).+")
                             pattern_add = re.compile(r"(?<=<em>).+(?=</em>)")
                             for li in position_info:
@@ -72,11 +78,11 @@ class SpiderLg(object):
                                 return company, positionname, salary, address, exp
 
                         else:
-                            raise Exception("RequestError:" + resp_content.status_code)
+                            raise Exception("RequestError:" +
+                                            resp_content.status_code)
                     except requests.exceptions.RequestException as e:
                         logging.debug(e)
                         i += 1
                     break
         else:
             logging.debug("List is null!")
-
